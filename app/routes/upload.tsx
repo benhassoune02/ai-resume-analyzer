@@ -50,13 +50,13 @@ const Upload = () => {
         const uuid = generateUUID();
         const data ={
             id: uuid,
-            resumePath: uploadedimage.path,
+            resumePath: UploadedFile.path,
             imagePath: uploadedimage.path,
             companyName, jobTitle, jobDescription,
             feedback: '',
         }
 
-        await kv.set(`resume: &{uuid}`, JSON.stringify(data));
+        await kv.set(`resume:${uuid}`, JSON.stringify(data));
 
         setStatusText('Analyzing...');
 
@@ -93,6 +93,7 @@ const Upload = () => {
 
             setStatusText('Analysis completed, redirecting...');
             console.log("Final data:", data);
+            navigate(`/resume/${uuid}`);
 
         } catch (error) {
             console.error("AI ANALYSIS ERROR:", error);
